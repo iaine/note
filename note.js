@@ -13,24 +13,31 @@
     function max (dataArr) {
         return Math.max(...dataArr);
     }
+
+    function createNote(audioCtx, notes) {
+        notes.map(n => play(audioCtx, n));
+    }
+
+    function getLastSlice(sliceid) {
+      return (sliceid > 0) ? (slideid-1) : 0;
+    }
   
     function play(audioCtx, noteArr) {
       for (let n in noteArr) {
-        for (let j in n) {
-          let oscillator[n][j] = audioCtx.createOscillator();
+          let oscillator[n] = audioCtx.createOscillator();
 
-          let gainNode[n][j] = audioCtx.createGain();
-          gainNode[n][j].connect(audioCtx.destination);
-          gainNode[n][j].gain.setValueAtTime(volume, id);
+          let gainNode[n] = audioCtx.createGain();
+          gainNode[n].connect(audioCtx.destination);
+          gainNode[n].gain.setValueAtTime(n.volume, n.id);
 
+          let m = getLastSlice(n);
 
-          oscillator[n][j].type = "sine";
-          oscillator[n][j].frequency.setValueAtTime(frequency, id);
-          oscillator[n][j].frequency.exponentialRampToValueAtTime(frequency, audioCtx.currentTime + 0.03);
-          oscillator[n][j].start(id);
-          oscillator[n][j].stop(id + time);
-          oscillator[n][j].connect(audioCtx.destination);
-        }
+          oscillator[n].type = "sine";
+          oscillator[n].frequency.setValueAtTime(m.frequency, n.id);
+          oscillator[n].frequency.exponentialRampToValueAtTime(n.frequency, audioCtx.currentTime + 0.03);
+          oscillator[n].start(n.id);
+          oscillator[n].stop(n.id + time);
+          oscillator[n].connect(audioCtx.destination);
       }
     }
 
