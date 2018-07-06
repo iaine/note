@@ -5,13 +5,33 @@
     }
 
     //Return the minimum
-    function min = (dataArr) {
+    function min (dataArr) {
        return Math.min(...dataArr);
     }
 
     //Return the maximum
-    var max => (dataArr) {
+    function max (dataArr) {
         return Math.max(...dataArr);
+    }
+  
+    function play(audioCtx, noteArr) {
+      for (let n in noteArr) {
+        for (let j in n) {
+          let oscillator[n][j] = audioCtx.createOscillator();
+
+          let gainNode[n][j] = audioCtx.createGain();
+          gainNode[n][j].connect(audioCtx.destination);
+          gainNode[n][j].gain.setValueAtTime(volume, id);
+
+
+          oscillator[n][j].type = "sine";
+          oscillator[n][j].frequency.setValueAtTime(frequency, id);
+          oscillator[n][j].frequency.exponentialRampToValueAtTime(frequency, audioCtx.currentTime + 0.03);
+          oscillator[n][j].start(id);
+          oscillator[n][j].stop(id + time);
+          oscillator[n][j].connect(audioCtx.destination);
+        }
+      }
     }
 
     // Start single note
